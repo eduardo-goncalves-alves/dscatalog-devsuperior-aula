@@ -3,10 +3,13 @@ package com.pieiv.dscatalog.services;
 import com.pieiv.dscatalog.dto.CategoryDTO;
 import com.pieiv.dscatalog.entities.Category;
 import com.pieiv.dscatalog.repositories.CategoryRepository;
+import com.pieiv.dscatalog.services.exceptions.DatabaseExcpetion;
 import com.pieiv.dscatalog.services.exceptions.ResourceNotFoundExcpetion;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,4 +56,13 @@ public class CategoryService {
         }
     }
 
+    public void delete(Long id) {
+        try{
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundExcpetion("Entity not found with id " + id);
+        } catch (DataIntegrityViolationException e){
+            throw new DatabaseExcpetion("Integrity violation");
+        }
+    }
 }
