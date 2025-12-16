@@ -1,8 +1,7 @@
 package com.pieiv.dscatalog.resources.exceptions;
 
 import com.pieiv.dscatalog.entities.Category;
-import com.pieiv.dscatalog.services.exceptions.EntityNotFoundExcpetion;
-import jakarta.persistence.EntityNotFoundException;
+import com.pieiv.dscatalog.services.exceptions.ResourceNotFoundExcpetion;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,7 @@ import java.time.Instant;
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundExcpetion.class)
+    @ExceptionHandler(ResourceNotFoundExcpetion.class)
     public ResponseEntity<StandardError> entityNotFound(Category category, HttpStatus status){
         StandardError err = new StandardError();
         err.setTimestamp(Instant.now());
